@@ -1,0 +1,391 @@
+# ECH RAAF (Resilient Autonomous Asset Flow) Architecture Blueprint
+## Full-Scope Financial + Dual-Rail Infrastructure Specification
+### Version: USA-CORS-DUALRAIL-FIAT-ECH-R1
+### Transport: ECH Handshake Auth + Telnet Secure Session Overlay
+### Output Type: Fully Expanded Production System Blueprint
+---
+# 1. SYSTEM OVERVIEW
+ECH RAAF is a sovereign-grade transactional architecture designed for:
+- ACH / NACHA
+- FedNow
+- RTP
+- Wire
+- Visa / Mastercard Debit Push
+- Treasury settlement
+- USD Fiat rails
+- Banking APIs
+- Wallets
+- CORS-controlled distributed applications
+- Telnet command fallback
+- Cloud shell operational deployment
+- Multi-node server routing
+- Ledger replication
+- Compliance controls
+---
+# 2. CORE NETWORK TOPOLOGY
+```ascii
+CLIENT
+ |
+ |--ECH Handshake Auth Layer
+ |
+ v
+API GATEWAY (CORS Dual Rail)
+ |
+ |--Domestic Fiat Rail
+ |     |--ACH
+ |     |--FedNow
+ |     |--Wire
+ |     |--Debit Card Push
+ |
+ |--Treasury Settlement Rail
+ |     |--Reserve Ledger
+ |     |--Cross-Institution Routing
+ |
+ |--Wallet Rail
+       |--Apple Cash
+       |--Cash App
+       |--Chime
+       |--GreenDot
+       |--Custom ECH Wallet
+
+⸻
+
+3. AUTHENTICATION LAYER
+
+ECH Handshake Protocol
+
+Required at:
+
+* Session initiation
+* API request
+* Ledger mutation
+* Settlement routing
+* User auth
+* Cloud shell execution
+* Telnet terminal access
+* Wallet binding
+
+Sequence:
+
+Client Init
+  ->
+ECH HELLO
+  ->
+Public Key Exchange
+  ->
+Merkle Root Verification
+  ->
+Session Token
+  ->
+Dynamic Routing Auth
+  ->
+Execution Permission
+
+Components:
+
+* TLS + ECH
+* Merkle Root Hash
+* Device fingerprint
+* Treasury signature
+* FICO / risk policy
+* Session nonce
+* Dynamic key rotation
+
+⸻
+
+4. FILE STRUCTURE
+
+/ech-raaf/
+|
+|-- /auth/
+|     |-- ech_handshake.py
+|     |-- key_rotation.py
+|     |-- merkle_validator.py
+|     |-- cors_policy.yaml
+|
+|-- /rails/
+|     |-- ach_engine.py
+|     |-- fednow_engine.py
+|     |-- wire_engine.py
+|     |-- visa_push_engine.py
+|     |-- settlement_switch.py
+|
+|-- /wallets/
+|     |-- apple_cash_adapter.py
+|     |-- chime_adapter.py
+|     |-- greendot_adapter.py
+|     |-- stride_adapter.py
+|     |-- cash_wallet_core.py
+|
+|-- /ledger/
+|     |-- transaction_ledger.py
+|     |-- reserve_ledger.py
+|     |-- audit_log.py
+|     |-- reconciliation.py
+|
+|-- /network/
+|     |-- telnet_secure_shell.py
+|     |-- aws_switchboard.py
+|     |-- routing_mesh.py
+|     |-- node_failover.py
+|
+|-- /compliance/
+|     |-- kyc_engine.py
+|     |-- aml_monitor.py
+|     |-- fico_scoring.py
+|     |-- sanctions_filter.py
+|
+|-- /deployment/
+|     |-- docker-compose.yml
+|     |-- kubernetes.yaml
+|     |-- aws_lambda_router.tf
+|     |-- cloud_shell_bootstrap.sh
+|
+|-- /docs/
+|     |-- full_spec.md
+|     |-- api_reference.md
+|     |-- settlement_flow.md
+
+⸻
+
+5. DUAL RAIL MODEL
+
+Rail A: Consumer Fiat Flow
+
+* Debit
+* ACH
+* Wallets
+* Payroll
+* Consumer payouts
+
+Rail B: Treasury / Institutional
+
+* Reserve liquidity
+* Wire
+* Interbank
+* Government
+* Federal settlement
+
+Routing Logic:
+
+IF transaction <= threshold:
+    Consumer Rail
+ELSE:
+    Treasury Rail
+
+⸻
+
+6. CORS SECURITY MODEL
+
+Domains:
+
+* ECH://
+* HTTPS://
+* AWS internal nodes
+* Treasury switchboard
+* Expo mobile app
+* Shell instances
+
+Policy:
+
+allowed_origins:
+  - ech://*
+  - https://*.aws.amazon.com
+  - https://*.treasury.internal
+methods:
+  - GET
+  - POST
+  - PATCH
+  - AUTH
+headers:
+  - Authorization
+  - ECH-Signature
+  - Treasury-Key
+
+⸻
+
+7. TELNET OPERATIONAL SHELL
+
+Purpose:
+
+* Emergency fallback
+* CLI settlements
+* Node diagnostics
+* Direct routing
+* Air-gapped management
+
+Telnet Security:
+
+* ECH tunnel encapsulation
+* Key pinning
+* Session timeout
+* Audit logs
+* Restricted command map
+
+Commands:
+
+ech-auth
+ledger-sync
+rail-route
+wallet-bind
+reserve-check
+settle-now
+audit-trace
+
+⸻
+
+8. TRANSACTION FLOW
+
+User Request
+   ->
+ECH Auth
+   ->
+Risk/FICO Validation
+   ->
+Rail Selection
+   ->
+Compliance Screening
+   ->
+Settlement Engine
+   ->
+Ledger Commit
+   ->
+Reserve Reconciliation
+   ->
+Receipt / Wallet Update
+
+⸻
+
+9. INFRASTRUCTURE STACK
+
+Cloud:
+
+* AWS
+* Lambda
+* API Gateway
+* ECS
+* RDS
+* DynamoDB
+* CloudWatch
+* KMS
+
+Networking:
+
+* Private VPC
+* Treasury switchboard
+* Redundant failover
+* DNS routing
+* Mesh nodes
+
+⸻
+
+10. DATA MODELS
+
+User:
+
+{
+  "user_id": "",
+  "kyc_status": "",
+  "wallets": [],
+  "fico_score": 0,
+  "rail_permissions": []
+}
+
+Transaction:
+
+{
+  "tx_id": "",
+  "origin": "",
+  "destination": "",
+  "rail": "",
+  "amount": 0,
+  "auth_hash": "",
+  "status": ""
+}
+
+⸻
+
+11. SECURITY CONTROLS
+
+* End-to-end encryption
+* ECH session tokens
+* Merkle verification
+* Hardware key support
+* Continuous audit
+* Ledger immutability
+* AML/KYC
+* Dynamic sanctions
+* Node quarantine
+
+⸻
+
+12. DEPLOYMENT FLOW
+
+Cloud Shell Bootstrap
+   ->
+ECH Node Registration
+   ->
+AWS Switchboard Connect
+   ->
+Treasury Auth
+   ->
+Rail Engines Deploy
+   ->
+Wallet Adapters Deploy
+   ->
+Compliance Engines Start
+   ->
+Live Settlement
+
+⸻
+
+13. SCALABILITY
+
+* Horizontal node expansion
+* Multi-region AWS
+* Cross-bank API adapters
+* Real-time reserve balancing
+* Mobile app integrations
+* Web3 wallet bridge optional
+
+⸻
+
+14. DISASTER RECOVERY
+
+* Multi-ledger replication
+* Cold storage reserve state
+* Node failover
+* Shell fallback
+* Treasury rollback
+* Daily reconciliation snapshots
+
+⸻
+
+15. GOVERNANCE
+
+* Regulatory mapping
+* NACHA
+* PCI-DSS
+* FedNow policy
+* OFAC
+* AML
+* SOC2
+* ISO 20022 compatibility
+
+⸻
+
+16. FINAL DEPLOYMENT OBJECTIVE
+
+Deliver:
+
+* Secure unified USA fiat rail
+* Treasury + consumer dual system
+* Wallet ecosystem
+* Cloud shell controllable architecture
+* Full compliance
+* Real-time settlement
+* Sovereign-grade routing
+
+⸻
+
+END OF SPEC
